@@ -1,6 +1,6 @@
 from collections import deque
 def earliest_ancestor(ancestors, starting_node):
-    # Create a family tree of child keys w/ deque of parent values
+    # Create a family tree of child keys w/ list of parent values
     fam_tree = {}
     for (parent, child) in ancestors:
         # If the child's already there, add the parent
