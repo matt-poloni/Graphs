@@ -49,7 +49,6 @@ class Graph:
                 neighbors = self.get_neighbors(vertex)
                 for n in neighbors:
                     queue.enqueue(n)
-        print("^^^BFT^^^")
 
     def dft(self, starting_vertex):
         """
@@ -67,7 +66,6 @@ class Graph:
                 neighbors = self.get_neighbors(vertex)
                 for n in neighbors:
                     stack.push(n)
-        print("^^^DFT^^^")
 
     def dft_recursive(self, starting_vertex, visited=None):
         """
@@ -90,7 +88,21 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        queue = Queue()
+        queue.enqueue([starting_vertex])
+        visited = set()
+        while queue.size() > 0:
+            path = queue.dequeue()
+            vertex = path[-1]
+            if vertex not in visited:
+                visited.add(vertex)
+                neighbors = self.get_neighbors(vertex)
+                for n in neighbors:
+                    new_path = [*path, n]
+                    if n == destination_vertex:
+                        return new_path
+                    else:
+                        queue.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -153,6 +165,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 5, 6
     '''
     graph.bft(1)
+    print("^^^BFT^^^")
 
     '''
     Valid DFT paths:
@@ -162,13 +175,16 @@ if __name__ == '__main__':
         1, 2, 4, 6, 3, 5, 7
     '''
     graph.dft(1)
+    print("^^^DFT^^^")
     graph.dft_recursive(1)
+    print("^^^DFT-R^^^")
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    # print(graph.bfs(1, 6))
+    print(graph.bfs(1, 6))
+    print("^^^BFS^^^")
 
     '''
     Valid DFS paths:
