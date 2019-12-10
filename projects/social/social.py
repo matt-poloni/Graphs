@@ -1,4 +1,5 @@
-
+from itertools import combinations
+from random import sample
 
 class User:
     def __init__(self, name):
@@ -17,7 +18,7 @@ class SocialGraph:
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
-            print("WARNING: Friendship already exists")
+            print(f"WARNING: Friendship already exists between {user_id} and {friend_id}")
         else:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
@@ -47,8 +48,17 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-
+        for i in range(numUsers):
+            self.add_user(i+1)
         # Create friendships
+        ids = range(1, numUsers+1)
+        possible_pairs = [*combinations(ids, 2)]
+        numPairs = numUsers * avgFriendships
+        pairs = sample(possible_pairs, k=numPairs)
+        for (pair) in pairs:
+            self.add_friendship(*pair)
+
+        
 
     def get_all_social_paths(self, user_id):
         """
