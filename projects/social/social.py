@@ -2,6 +2,7 @@ from itertools import combinations
 from math import ceil
 from random import sample
 from collections import deque
+from statistics import mean, median
 
 class User:
     def __init__(self, name):
@@ -84,6 +85,20 @@ class SocialGraph:
                 queue.append(visited[f])
         return visited
 
+    def user_network_coverage(self):
+        percents = []
+        degrees = []
+        numUsers = len(self.users)
+        for user in self.users:
+            paths = self.get_all_social_paths(user)
+            percents.append(len(paths) / (numUsers-1))
+            for path in paths:
+                degrees.append(len(paths[path]) - 1)
+        return {
+            "med_pct": median(percents) * 100,
+            "avg_deg": mean(degrees)
+        }
+
 
 if __name__ == '__main__':
     sg = SocialGraph()
@@ -91,3 +106,6 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
+    sg.populate_graph(1000, 5)
+    coverage = sg.user_network_coverage()
+    print(coverage)

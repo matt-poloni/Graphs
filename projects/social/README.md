@@ -50,15 +50,17 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 
 * `500` because friendships are bi-directional (two people gain a friend with every call), so `100 users * 10 average friends apiece = 1000`, which you only have to call half the time.
 
-2. If you create 1000 users with an average of 5 random friends each, what percentage of other users will be in a particular user's extended social network? What is the average degree of separation between a user and those in his/her extended network?
+2. If you create 1000 users with an average of 5 random friends each, (a) what percentage of other users will be in a particular user's extended social network? (b) What is the average degree of separation between a user and those in his/her extended network?
 
-* 
+* If the function that I created to calculate both is working properly, then (a) between 99-100% and (b) just under 4.5.
 
 
 
 ## 4. Stretch Goal
 
 1. You might have found the results from question #2 above to be surprising. Would you expect results like this in real life? If not, what are some ways you could improve your friendship distribution model for more realistic results?
+
+* Not quite that well-connected, no. Since people are more likely to clump together, I'd probably randomly populate buckets of users, randomly create friendship pairs within those buckets for some large percentage of all friendships, and then randomly create friendship pairs between buckets for the rest.
 
 2. If you followed the hints for part 1, your `populateGraph()` will run in O(n^2) time. Refactor your code to run in O(n) time. Are there any tradeoffs that come with this implementation?
 
