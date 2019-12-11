@@ -8,7 +8,8 @@ import random
 # Load world
 world = World()
 
-world.loadGraph(rg_3)
+roomGraph = rg_3
+world.loadGraph(roomGraph)
 
 # UNCOMMENT TO VIEW MAP
 world.printRooms()
