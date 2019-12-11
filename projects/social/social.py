@@ -1,4 +1,8 @@
-
+from itertools import combinations
+from math import ceil
+from random import choice, sample
+from collections import deque
+from statistics import mean, median
 
 class User:
     def __init__(self, name):
@@ -17,7 +21,7 @@ class SocialGraph:
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
-            print("WARNING: Friendship already exists")
+            print(f"WARNING: Friendship already exists between {user_id} and {friend_id}")
         else:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
@@ -47,8 +51,22 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-
+        ids = range(1, numUsers+1)
+        for i in ids:
+            self.add_user(f"User {i}")
         # Create friendships
+        numPairs = ceil((numUsers * avgFriendships) / 2)
+        pairs = set()
+        while len(pairs) < numPairs:
+            f1 = choice(ids[:-1])
+            f2 = choice(ids[f1:])
+            pairs.add((f1, f2))
+        # possible_pairs = [*combinations(ids, 2)]
+        # pairs = sample(possible_pairs, k=numPairs)
+        for (pair) in pairs:
+            self.add_friendship(*pair)
+
+        
 
     def get_all_social_paths(self, user_id):
         """
@@ -61,7 +79,30 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        queue = deque()
+        queue.append([user_id])
+        while len(queue) > 0:
+            path = queue.popleft()
+            person = path[-1]
+            friends = {p for p in self.friendships[person] if p is not user_id and p not in visited}
+            for f in friends:
+                visited[f] = [*path, f]
+                queue.append(visited[f])
         return visited
+
+    def user_network_coverage(self):
+        percents = []
+        degrees = []
+        numUsers = len(self.users)
+        for user in self.users:
+            paths = self.get_all_social_paths(user)
+            percents.append(len(paths) / (numUsers-1))
+            for path in paths:
+                degrees.append(len(paths[path]) - 1)
+        return {
+            "med_pct": mean(percents) * 100,
+            "avg_deg": mean(degrees)
+        }
 
 
 if __name__ == '__main__':
@@ -70,3 +111,7 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
+    sg.populate_graph(1000, 5)
+    print('COVERAGE:')
+    coverage = sg.user_network_coverage()
+    print(coverage)
