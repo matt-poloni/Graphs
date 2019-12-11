@@ -19,7 +19,11 @@ player = Player("Name", world.startingRoom)
 # Fill this out
 traversalPath = []
 
-
+# Filter rooms into three categories:
+    # Dead-ends: only one connected room
+    # Hallways: exactly two connected rooms
+    # Nodes: more than two connected rooms
+# Create branches of hallways with any connected dead-end
 
 # TRAVERSAL TEST
 visited_rooms = set()
