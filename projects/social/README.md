@@ -64,5 +64,5 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 
 2. If you followed the hints for part 1, your `populateGraph()` will run in O(n^2) time. Refactor your code to run in O(n) time. Are there any tradeoffs that come with this implementation?
 
-* Finally refactored it to work in O(n) time. The tradeoff (if you consider it one) is that the median network coverage drops into the 87-93% range and the average degrees of seperation drops to just over 3.5.
+* Finally refactored it to work in O(n) time. The tradeoff (if you consider it one) is that the median network coverage drops into the 87-93% range and the average degrees of separation drops to just over 3.5.
 
