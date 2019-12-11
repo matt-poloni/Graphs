@@ -1,14 +1,14 @@
 from room import Room
 from player import Player
 from world import World
-from room_graphs import room_graph_1, room_graph_2, room_graph_3, room_graph_4
+from room_graphs import rg_3, rg_9, rg_12, rg_18, rg_500
 
 import random
 
 # Load world
 world = World()
 
-world.loadGraph(room_graph_1)
+world.loadGraph(rg_3)
 
 # UNCOMMENT TO VIEW MAP
 world.printRooms()

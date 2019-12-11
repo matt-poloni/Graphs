@@ -56,13 +56,13 @@ class SocialGraph:
             self.add_user(f"User {i}")
         # Create friendships
         numPairs = ceil((numUsers * avgFriendships) / 2)
-        pairs = set()
-        while len(pairs) < numPairs:
-            f1 = choice(ids[:-1])
-            f2 = choice(ids[f1:])
-            pairs.add((f1, f2))
-        # possible_pairs = [*combinations(ids, 2)]
-        # pairs = sample(possible_pairs, k=numPairs)
+        # pairs = set()
+        # while len(pairs) < numPairs:
+        #     f1 = choice(ids[:-1])
+        #     f2 = choice(ids[f1:])
+        #     pairs.add((f1, f2))
+        possible_pairs = [*combinations(ids, 2)]
+        pairs = sample(possible_pairs, k=numPairs)
         for (pair) in pairs:
             self.add_friendship(*pair)
 
