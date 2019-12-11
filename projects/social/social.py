@@ -1,6 +1,6 @@
 from itertools import combinations
 from math import ceil
-from random import sample
+from random import choice, sample
 from collections import deque
 from statistics import mean, median
 
@@ -55,9 +55,14 @@ class SocialGraph:
         for i in ids:
             self.add_user(f"User {i}")
         # Create friendships
-        possible_pairs = [*combinations(ids, 2)]
         numPairs = ceil((numUsers * avgFriendships) / 2)
-        pairs = sample(possible_pairs, k=numPairs)
+        pairs = set()
+        while len(pairs) < numPairs:
+            f1 = choice(ids[:-1])
+            f2 = choice(ids[f1:])
+            pairs.add((f1, f2))
+        # possible_pairs = [*combinations(ids, 2)]
+        # pairs = sample(possible_pairs, k=numPairs)
         for (pair) in pairs:
             self.add_friendship(*pair)
 
@@ -95,7 +100,7 @@ class SocialGraph:
             for path in paths:
                 degrees.append(len(paths[path]) - 1)
         return {
-            "med_pct": median(percents) * 100,
+            "med_pct": mean(percents) * 100,
             "avg_deg": mean(degrees)
         }
 
@@ -107,5 +112,6 @@ if __name__ == '__main__':
     connections = sg.get_all_social_paths(1)
     print(connections)
     sg.populate_graph(1000, 5)
+    print('COVERAGE:')
     coverage = sg.user_network_coverage()
     print(coverage)
