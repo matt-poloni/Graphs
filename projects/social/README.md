@@ -64,5 +64,5 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 
 2. If you followed the hints for part 1, your `populateGraph()` will run in O(n^2) time. Refactor your code to run in O(n) time. Are there any tradeoffs that come with this implementation?
 
-* I'm not entirely sure what `n` would be in this situation. Technically, my new implementation has O(infinity), because it _could_ randomly select the exact same pair of users over and over again until the end of time, but it should realistically be very close to `n` time without any real tradeoff. It does appear to reduce the typical network coverage of a user down to 96-98% for some reason, though.
+* Finally refactored it to work in O(n) time. The tradeoff (if you consider it one) is that the median network coverage drops into the 87-93% range and the average degrees of separation drops to just over 3.5.
 

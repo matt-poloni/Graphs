@@ -1,6 +1,6 @@
 from itertools import combinations
-from math import ceil
-from random import choice, sample
+from math import ceil, sqrt
+from random import choice, sample, randint
 from collections import deque
 from statistics import mean, median
 
@@ -51,20 +51,19 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-        ids = range(1, numUsers+1)
+        ids = set(range(1, numUsers+1))
         for i in ids:
             self.add_user(f"User {i}")
         # Create friendships
         numPairs = ceil((numUsers * avgFriendships) / 2)
-        pairs = set()
-        while len(pairs) < numPairs:
-            f1 = choice(ids[:-1])
-            f2 = choice(ids[f1:])
-            pairs.add((f1, f2))
-        # possible_pairs = [*combinations(ids, 2)]
-        # pairs = sample(possible_pairs, k=numPairs)
-        for (pair) in pairs:
-            self.add_friendship(*pair)
+        maxFriends = ceil(sqrt(numUsers - 1))
+        while numPairs > 0:
+            current = ids.pop()
+            max = min(numPairs, maxFriends)
+            friends = sample(ids, randint(1, max))
+            for friend in friends:
+                self.add_friendship(current, friend)
+                numPairs -= 1
 
         
 
